@@ -37,6 +37,8 @@ function note($fileName) {
 	notepad ($fileName)
 }
 
+Set-Alias -Name np -Value notepad
+
 function captainslog {
 	$url = "https://gist.githubusercontent.com/ogre71/4afed194bee1cb63a6b4b580de1cda03/raw/780dcb2960a2cfcd534d6cbf4edd836f49744124/CaptainsLog.html" 
 	$contents = Invoke-RestMethod -Uri $url
@@ -54,12 +56,37 @@ function captainslog {
 	return $contents
 }
 
+Write-Host "captainslog function available" -ForegroundColor "green"
+
+#TODO: change this to a different gist than captainslog, create the bootstrap gist
+#TODO: abstract most of this and captainslog into it's own (private?) function
+function newbootstrap { 
+	$url = "https://gist.githubusercontent.com/ogre71/4afed194bee1cb63a6b4b580de1cda03/raw/780dcb2960a2cfcd534d6cbf4edd836f49744124/CaptainsLog.html" 
+	$contents = Invoke-RestMethod -Uri $url
+
+	$contents = $contents.Replace("`$`$date`$`$", (Get-Date))
+	
+	$logExists = Test-Path "bootstrapQuickStart.html"
+	if (!$logExists) { 
+			$contents >> "bootstrapQuickStart.html"
+			notepad "bootstrapQuickStart.html"
+	}
+	
+	& ".\bootstrapQuickStart.html"
+	
+	return $contents
+}
+
+Write-Host "newbootstrap function available" -ForegroundColor "green"
+
 function clone ($repository) { 
 	if ($repository -like "PsOgreProfile") {
 		git clone https://github.com/ogre71/PsOgreProfile.git
-		Write-Host "copy-item $Profile . -Force #This is probably what you want to do next."
+		Write-Host "copy-item `$Profile . -Force #This is probably what you want to do next." -ForegroundColor "green"
 	} else {
 		Write-Host "Unknown repository: " $repository
 		Write-Host "Known repositories: PsOgreProfile"
 	}
 }
+
+Write-Host "clone function available" -ForegroundColor "green"
