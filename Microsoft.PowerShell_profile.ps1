@@ -38,9 +38,11 @@ function note($fileName) {
 }
 
 function captainslog {
-	$url = "https://gist.githubusercontent.com/ogre71/4afed194bee1cb63a6b4b580de1cda03/raw/603010e3f2856ca643775fcb50df2590e0c280cf/CaptainsLog.html" 
+	$url = "https://gist.githubusercontent.com/ogre71/4afed194bee1cb63a6b4b580de1cda03/raw/780dcb2960a2cfcd534d6cbf4edd836f49744124/CaptainsLog.html" 
 	$contents = Invoke-RestMethod -Uri $url
 
+	$contents = $contents.Replace("`$`$date`$`$", (Get-Date))
+	
 	$logExists = Test-Path "CaptainsLog.html"
 	if (!$logExists) { 
 			$contents >> "CaptainsLog.html"
@@ -57,5 +59,6 @@ function clone ($repository) {
 		git clone https://github.com/ogre71/PsOgreProfile.git
 	} else {
 		Write-Host "Unknown repository: " $repository
+		Write-Host "Known repositories: PsOgreProfile"
 	}
 }
