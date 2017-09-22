@@ -57,6 +57,7 @@ function captainslog {
 function clone ($repository) { 
 	if ($repository -like "PsOgreProfile") {
 		git clone https://github.com/ogre71/PsOgreProfile.git
+		Write-Host "copy-item $Profile . -Force #This is probably what you want to do next."
 	} else {
 		Write-Host "Unknown repository: " $repository
 		Write-Host "Known repositories: PsOgreProfile"
