@@ -56,7 +56,8 @@ function captainslog {
 	return $contents
 }
 
-Write-Host "captainslog function available" -ForegroundColor "green"
+Write-Host "captainslog" -NoNewLine -ForegroundColor "green"
+Write-Host " function available" 
 
 #TODO: change this to a different gist than captainslog, create the bootstrap gist
 #TODO: abstract most of this and captainslog into it's own (private?) function
@@ -77,16 +78,20 @@ function newbootstrap {
 	return $contents
 }
 
-Write-Host "newbootstrap function available" -ForegroundColor "green"
+Write-Host "newbootstrap" -ForegroundColor "green" -NoNewLine
+Write-Host  " function available"
 
 function clone ($repository) { 
 	if ($repository -like "PsOgreProfile") {
 		git clone https://github.com/ogre71/PsOgreProfile.git
 		Write-Host "copy-item `$Profile . -Force #This is probably what you want to do next." -ForegroundColor "green"
 	} else {
-		Write-Host "Unknown repository: " $repository
-		Write-Host "Known repositories: PsOgreProfile"
+		Write-Host "Unknown repository: "
+		Write-Host "$repository" -ForegroundColor "red"
+		Write-Host "Known repositories: " -NoNewLine
+		Write-Host "PsOgreProfile" -ForegroundColor "green"
 	}
 }
 
-Write-Host "clone function available" -ForegroundColor "green"
+Write-Host "clone" -ForegroundColor "green" -NoNewLine
+Write-Host "  function available"
