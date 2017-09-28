@@ -94,4 +94,21 @@ function clone ($repository) {
 }
 
 Write-Host "clone" -ForegroundColor "green" -NoNewLine
-Write-Host "  function available"
+Write-Host " function available"
+
+function look {
+	Write-Host "You are in a dark swirling void. There is nothing to see here and nothing to do."
+}
+
+function Promote ($verb) {
+	Write-Host "$verb" -ForegroundColor "green" -NoNewLine
+	Write-Host " function available"
+}
+
+Promote("look")
+
+function inventory {
+	Write-Host "Your are holding nothing. In fact you don't even have a form."
+}
+
+Promote("inventory")
