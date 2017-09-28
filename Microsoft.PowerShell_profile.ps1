@@ -100,8 +100,18 @@ function look {
 	Write-Host "You are in a dark swirling void. There is nothing to see here and nothing to do."
 }
 
+# I dislike trusting myself to have typed strings correctly. 
+function nameof($functionName) {
+	$result = Get-ChildItem function: | Where { $_.name -like $functionName }
+	if ($result -ne $null) {
+		return $functionName
+	} else { 
+		Write-Error "$functionName is an unknown function"
+	}
+}
+
 function Promote ($verb) {
-	Write-Host "$verb" -ForegroundColor "green" -NoNewLine
+	Write-Host (nameof($verb)) -ForegroundColor "green" -NoNewLine
 	Write-Host " function available"
 }
 
