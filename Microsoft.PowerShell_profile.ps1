@@ -140,6 +140,7 @@ function zork() {
 	add-type -path .\Ogresoft.Parser.dll
 	$global:repl = new-object Ogresoft.Parser.Repl
 	$global:repl.Execute("look")
+	$global:repl.Shell()
 }
 
 #create note "do some stuff"
