@@ -85,6 +85,9 @@ function clone ($repository) {
 	if ($repository -like "PsOgreProfile") {
 		git clone https://github.com/ogre71/PsOgreProfile.git
 		Write-Host "copy-item `$Profile . -Force #This is probably what you want to do next." -ForegroundColor "green"
+	} elseif ($repository -like "ReadableThings") {
+		git clone https://github.com/ogre71/ReadableThings.git
+		cd ReadableThings
 	} else {
 		Write-Host "Unknown repository: "
 		Write-Host "$repository" -ForegroundColor "red"
@@ -122,3 +125,28 @@ function inventory {
 }
 
 Promote("inventory")
+
+function create($name) { 
+	$thing = new-object Ogresoft.Thing $name
+}
+
+Promote("create")
+
+function zork() {
+	cd .\ReadableThings\
+	cd .\Ogresoft.Parser\
+	cd bin
+	cd Debug
+	add-type -path .\Ogresoft.Parser.dll
+	$global:repl = new-object Ogresoft.Parser.Repl
+	$global:repl.Execute("look")
+}
+
+#create note "do some stuff"
+#drop note
+#take note
+#look
+#go north
+#go door
+#load readable things
+
