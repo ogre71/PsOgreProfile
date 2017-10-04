@@ -137,6 +137,7 @@ function zork() {
 	cd .\Ogresoft.Parser\
 	cd bin
 	cd Debug
+	[System.Environment]::CurrentDirectory = Get-Location
 	add-type -path .\Ogresoft.Parser.dll
 	$global:repl = new-object Ogresoft.Parser.Repl
 	$global:repl.Execute("look")
