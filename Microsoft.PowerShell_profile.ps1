@@ -49,12 +49,15 @@ function nameof($functionName) {
 	}
 }
 
-function Promote ($verb) {
+function Promote($verb, [parameter(Mandatory=$false)]$alias) {
 	Write-Host (nameof($verb)) -ForegroundColor "green" -NoNewLine
+	if ($alias -ne $null) {
+		Write-Host " ($alias)" -ForegroundColor "green" -NoNewLine
+	}
 	Write-Host " function available"
 }
 
-function captainslog {
+function New-CaptainsLog {
 	$url = "https://gist.githubusercontent.com/ogre71/4afed194bee1cb63a6b4b580de1cda03/raw/780dcb2960a2cfcd534d6cbf4edd836f49744124/CaptainsLog.html" 
 	$contents = Invoke-RestMethod -Uri $url
 
@@ -71,11 +74,11 @@ function captainslog {
 	return $contents
 }
 
-Promote("captainslog")
+Promote("New-CaptainsLog")
 
 #TODO: change this to a different gist than captainslog, create the bootstrap gist
 #TODO: abstract most of this and captainslog into it's own (private?) function
-function newbootstrap { 
+function New-Bootstrap { 
 	$url = "https://gist.githubusercontent.com/ogre71/4afed194bee1cb63a6b4b580de1cda03/raw/780dcb2960a2cfcd534d6cbf4edd836f49744124/CaptainsLog.html" 
 	$contents = Invoke-RestMethod -Uri $url
 
@@ -92,7 +95,7 @@ function newbootstrap {
 	return $contents
 }
 
-Promote("newbootstrap")
+Promote "New-Bootstrap" 
 
 function Get-NamedRepository (
 	[ValidateSet("PsOgreProfile", "ReadableThings")]
@@ -112,11 +115,20 @@ function Get-NamedRepository (
 }
 Set-Alias -Name clone -Value Get-NamedRepository
 
-Promote("Get-NamedRepository")
+Promote "Get-NamedRepository" -alias "clone"
 
 function zork() {
 	cd .\ReadableThings\
+	
+	$binExists = Test-Path .\Ogresoft.Parser\bin
+
+	if (!$binExists) { 
+		Write-Host Building Zork
+		pwd
+		Start-Process "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\devenv.exe" -ArgumentList ReadableThings.sln, /build -Wait
+	}
 	cd .\Ogresoft.Parser\
+
 	cd bin
 	cd Debug
 	[System.Environment]::CurrentDirectory = Get-Location
