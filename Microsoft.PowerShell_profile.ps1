@@ -39,6 +39,21 @@ function note($fileName) {
 
 Set-Alias -Name np -Value notepad
 
+# I dislike trusting myself to have typed strings correctly. 
+function nameof($functionName) {
+	$result = Get-ChildItem function: | Where { $_.name -like $functionName }
+	if ($result -ne $null) {
+		return $functionName
+	} else { 
+		Write-Error "$functionName is an unknown function"
+	}
+}
+
+function Promote ($verb) {
+	Write-Host (nameof($verb)) -ForegroundColor "green" -NoNewLine
+	Write-Host " function available"
+}
+
 function captainslog {
 	$url = "https://gist.githubusercontent.com/ogre71/4afed194bee1cb63a6b4b580de1cda03/raw/780dcb2960a2cfcd534d6cbf4edd836f49744124/CaptainsLog.html" 
 	$contents = Invoke-RestMethod -Uri $url
@@ -56,8 +71,7 @@ function captainslog {
 	return $contents
 }
 
-Write-Host "captainslog" -NoNewLine -ForegroundColor "green"
-Write-Host " function available" 
+Promote("captainslog")
 
 #TODO: change this to a different gist than captainslog, create the bootstrap gist
 #TODO: abstract most of this and captainslog into it's own (private?) function
@@ -78,10 +92,11 @@ function newbootstrap {
 	return $contents
 }
 
-Write-Host "newbootstrap" -ForegroundColor "green" -NoNewLine
-Write-Host  " function available"
+Promote("newbootstrap")
 
-function clone ($repository) { 
+function Get-NamedRepository (
+	[ValidateSet("PsOgreProfile", "ReadableThings")]
+	$repository	){ 
 	if ($repository -like "PsOgreProfile") {
 		git clone https://github.com/ogre71/PsOgreProfile.git
 		Write-Host "copy-item `$Profile . -Force #This is probably what you want to do next." -ForegroundColor "green"
@@ -92,45 +107,12 @@ function clone ($repository) {
 		Write-Host "Unknown repository: "
 		Write-Host "$repository" -ForegroundColor "red"
 		Write-Host "Known repositories: " -NoNewLine
-		Write-Host "PsOgreProfile" -ForegroundColor "green"
+		Write-Host "PsOgreProfile, ReadableThings" -ForegroundColor "green"
 	}
 }
+Set-Alias -Name clone -Value Get-NamedRepository
 
-Write-Host "clone" -ForegroundColor "green" -NoNewLine
-Write-Host " function available"
-
-function look {
-	Write-Host "You are in a dark swirling void. There is nothing to see here and nothing to do."
-}
-
-# I dislike trusting myself to have typed strings correctly. 
-function nameof($functionName) {
-	$result = Get-ChildItem function: | Where { $_.name -like $functionName }
-	if ($result -ne $null) {
-		return $functionName
-	} else { 
-		Write-Error "$functionName is an unknown function"
-	}
-}
-
-function Promote ($verb) {
-	Write-Host (nameof($verb)) -ForegroundColor "green" -NoNewLine
-	Write-Host " function available"
-}
-
-Promote("look")
-
-function inventory {
-	Write-Host "Your are holding nothing. In fact you don't even have a form."
-}
-
-Promote("inventory")
-
-function create($name) { 
-	$thing = new-object Ogresoft.Thing $name
-}
-
-Promote("create")
+Promote("Get-NamedRepository")
 
 function zork() {
 	cd .\ReadableThings\
@@ -143,6 +125,8 @@ function zork() {
 	$global:repl.Execute("look")
 	$global:repl.Shell()
 }
+
+Promote("zork")
 
 #create note "do some stuff"
 #drop note
