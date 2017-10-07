@@ -135,7 +135,11 @@ function zork() {
 	add-type -path .\Ogresoft.Parser.dll
 	$global:repl = new-object Ogresoft.Parser.Repl
 	$global:repl.Execute("look")
-	$global:repl.Shell()
+	$global:exception = $global:repl.Shell()
+	if ($global:exception -ne $null) {
+		Write-Host $global:exception -ForegroundColor Red
+		Write-Host $global:exception.StackTrace -ForegroundColor Red
+	}
 }
 
 Promote("zork")
