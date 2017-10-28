@@ -14,6 +14,12 @@ Write-Host " and " -NoNewLine
 Write-Host "note" -NoNewLine -foregroundColor "green"
 Write-Host " commands have been overridden to execute Notepad++"
 
+$snippets = "C:\Users\Ogre\Documents\Visual Studio 2017\Code Snippets\Visual C#\My Code Snippets"
+
+function log {
+	git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+}
+
 cd $scratchPath 
 $today = (Get-Date -Format FileDate)
 $todayExists = Test-Path $today
@@ -98,7 +104,7 @@ function New-Bootstrap {
 Promote "New-Bootstrap" 
 
 function Get-NamedRepository (
-	[ValidateSet("PsOgreProfile", "ReadableThings")]
+	[ValidateSet("PsOgreProfile", "ReadableThings", "VsSnippets")]
 	$repository	){ 
 	if ($repository -like "PsOgreProfile") {
 		git clone https://github.com/ogre71/PsOgreProfile.git
@@ -122,11 +128,11 @@ function zork() {
 	
 	$binExists = Test-Path .\Ogresoft.Parser\bin
 
-	if (!$binExists) { 
-		Write-Host Building Zork
-		pwd
-		Start-Process "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\devenv.exe" -ArgumentList ReadableThings.sln, /build -Wait
-	}
+	# if (!$binExists) { 
+		# Write-Host Building Zork
+		# pwd
+		# Start-Process "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\devenv.exe" -ArgumentList ReadableThings.sln, /build -Wait
+	# }
 	cd .\Ogresoft.Parser\
 
 	cd bin
@@ -151,4 +157,10 @@ Promote("zork")
 #go north
 #go door
 #load readable things
+
+#Add-Type -AssemblyName "System.Web.Extensions"
+#$serializer = new-object System.Web.Script.Serialization.JavaScriptSerializer
+#$thing = new-object Ogresoft.Thing("cow")
+#$serializedThing = $serializer.Serialize($thing)
+#$serializer.DeserializeObject($serializedThing)
 
