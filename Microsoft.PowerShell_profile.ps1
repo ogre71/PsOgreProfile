@@ -117,7 +117,7 @@ function Get-NamedRepository (
 		cd Physics
 	} elseif ($repository -like "Stuff") { 
 		git clone https://github.com/ogre71/Stuff.git
-		cd Physics
+		cd Stuff
 	} else {
 		Write-Host "Unknown repository: "
 		Write-Host "$repository" -ForegroundColor "red"
