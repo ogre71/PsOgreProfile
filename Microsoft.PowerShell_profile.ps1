@@ -104,7 +104,7 @@ function New-Bootstrap {
 Promote "New-Bootstrap" 
 
 function Get-NamedRepository (
-	[ValidateSet("PsOgreProfile", "ReadableThings", "VsSnippets", "Physics")]
+	[ValidateSet("PsOgreProfile", "ReadableThings", "VsSnippets", "Physics", "Stuff")]
 	$repository	){ 
 	if ($repository -like "PsOgreProfile") {
 		git clone https://github.com/ogre71/PsOgreProfile.git
@@ -114,6 +114,9 @@ function Get-NamedRepository (
 		cd ReadableThings 
 	} elseif ($repository -like "Physics") { 
 		git clone https://github.com/ogre71/Physics.git
+		cd Physics
+	} elseif ($repository -like "Stuff") { 
+		git clone https://github.com/ogre71/Stuff.git
 		cd Physics
 	} else {
 		Write-Host "Unknown repository: "
