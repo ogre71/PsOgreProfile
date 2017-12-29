@@ -20,7 +20,14 @@ function log {
 	git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 }
 
-cd $scratchPath 
+set-location $home
+if (!(test-path scratch)){
+	new-item "scratch" -ItemType Directory
+}
+
+set-location scratch
+
+#cd $scratchPath 
 $today = (Get-Date -Format FileDate)
 $todayExists = Test-Path $today
 
@@ -30,10 +37,10 @@ if (!$todayExists) {
 
 set-location $today
 
-function prompt {
-	Write-Host -NoNewLine (Get-Location)
-	return ">"
-}
+# function prompt {
+# 	Write-Host -NoNewLine (Get-Location)
+# 	return ">"
+# }
 
 function notepad ($fileName) {
 	&("C:\Program Files (x86)\Notepad++\notepad++.exe") $fileName
