@@ -111,11 +111,12 @@ function New-Bootstrap {
 Promote "New-Bootstrap" 
 
 function Get-NamedRepository (
-	[ValidateSet("PsOgreProfile", "ReadableThings", "VsSnippets", "Physics", "Stuff")]
+	[ValidateSet("PsOgreProfile", "ReadableThings", "VsSnippets", "Physics", "Stuff", "3dStuff")]
 	$repository	){ 
 	if ($repository -like "PsOgreProfile") {
 		git clone https://github.com/ogre71/PsOgreProfile.git
 		Write-Host "copy-item `$Profile . -Force #This is probably what you want to do next." -ForegroundColor "green"
+		cd PsOgreProfile
 	} elseif ($repository -like "ReadableThings") {
 		git clone https://github.com/ogre71/ReadableThings.git
 		cd ReadableThings 
@@ -125,6 +126,9 @@ function Get-NamedRepository (
 	} elseif ($repository -like "Stuff") { 
 		git clone https://github.com/ogre71/Stuff.git
 		cd Stuff
+	} elseif ($repository -like "3dStuff") { 
+		git clone https://github.com/ogre71/3dStuff.git
+		cd 3dStuff
 	} else {
 		Write-Host "Unknown repository: "
 		Write-Host "$repository" -ForegroundColor "red"
