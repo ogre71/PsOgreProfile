@@ -43,7 +43,7 @@ set-location $today
 # }
 
 function notepad ($fileName) {
-	&("C:\Program Files (x86)\Notepad++\notepad++.exe") $fileName
+	&("C:\Program Files\Notepad++\notepad++.exe") $fileName
 }
 
 function note($fileName) {
