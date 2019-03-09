@@ -133,7 +133,7 @@ function Get-NamedRepository (
 		Write-Host "Unknown repository: "
 		Write-Host "$repository" -ForegroundColor "red"
 		Write-Host "Known repositories: " -NoNewLine
-		Write-Host "PsOgreProfile, ReadableThings" -ForegroundColor "green"
+		Write-Host "PsOgreProfile, ReadableThings, Physics, Stuff, 3dStuff" -ForegroundColor "green"
 	}
 }
 Set-Alias -Name clone -Value Get-NamedRepository
