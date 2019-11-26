@@ -141,22 +141,25 @@ Set-Alias -Name clone -Value Get-NamedRepository
 Promote "Get-NamedRepository" -alias "clone"
 
 function zork() {
-	cd .\ReadableThings\
+	#cd .\ReadableThings\
 	
-	$binExists = Test-Path .\Ogresoft.Parser\bin
+	#$binExists = Test-Path .\Ogresoft.Parser\bin
 
 	# if (!$binExists) { 
 		# Write-Host Building Zork
 		# pwd
 		# Start-Process "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\devenv.exe" -ArgumentList ReadableThings.sln, /build -Wait
 	# }
-	cd .\Ogresoft.Parser\
+	#cd .\Ogresoft.Parser\
 
-	cd bin
-	cd Debug
-	[System.Environment]::CurrentDirectory = Get-Location
-	add-type -path .\Ogresoft.Parser.dll
-	$global:repl = new-object Ogresoft.Parser.Repl
+	#cd bin
+	#cd Debug
+	#[System.Environment]::CurrentDirectory = Get-Location
+	#add-type -path .\Ogresoft.Parser.dll
+	add-type -path .\ReadableThings\Ogresoft.Repl\bin\Debug\netcoreapp2.0\Ogresoft.Core.dll
+	add-type -path .\ReadableThings\Ogresoft.Repl\bin\Debug\netcoreapp2.0\Ogresoft.Repl.dll
+	
+	$global:repl = new-object Ogresoft.Parser.Parser
 	$global:repl.Execute("look")
 	$global:exception = $global:repl.Shell()
 	if ($global:exception -ne $null) {
