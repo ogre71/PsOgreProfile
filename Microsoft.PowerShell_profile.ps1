@@ -2,55 +2,55 @@ Write-Host "Hello, this is from your powershell profile."
 $scratchPath = "C:\Users\Ogre\scratch" 
 Write-Host "The scratch path is: " -NoNewLine
 Write-Host $scratchPath -foregroundColor "green"
-$nppPath = "C:\Program Files (x86)\Notepad++\notepad++.exe"
-Write-Host "Notepad++ is located here: " -NoNewLine
-Write-Host $nppPath -foregroundColor "green"
+# $nppPath = "C:\Program Files (x86)\Notepad++\notepad++.exe"
+# Write-Host "Notepad++ is located here: " -NoNewLine
+# Write-Host $nppPath -foregroundColor "green"
 
 Write-Host "The profile is located here: " $profile
-Write-Host "To edit the profile type `"notepad `$profile`""
-Write-Host "The " -NoNewLine
-Write-Host "notepad" -NoNewLine -foregroundColor "green"
-Write-Host " and " -NoNewLine
-Write-Host "note" -NoNewLine -foregroundColor "green"
-Write-Host " commands have been overridden to execute Notepad++"
+# Write-Host "To edit the profile type `"notepad `$profile`""
+# Write-Host "The " -NoNewLine
+# Write-Host "notepad" -NoNewLine -foregroundColor "green"
+# Write-Host " and " -NoNewLine
+# Write-Host "note" -NoNewLine -foregroundColor "green"
+# Write-Host " commands have been overridden to execute Notepad++"
 
-$snippets = "C:\Users\Ogre\Documents\Visual Studio 2017\Code Snippets\Visual C#\My Code Snippets"
+#$snippets = "C:\Users\Ogre\Documents\Visual Studio 2017\Code Snippets\Visual C#\My Code Snippets"
 
-function log {
-	git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-}
+#function log {
+#	git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+#}
 
-set-location $home
-if (!(test-path scratch)){
-	new-item "scratch" -ItemType Directory
-}
+#set-location $home
+#if (!(test-path scratch)){
+#	new-item "scratch" -ItemType Directory
+#}
 
-set-location scratch
+#set-location scratch
 
 #cd $scratchPath 
-$today = (Get-Date -Format FileDate)
-$todayExists = Test-Path $today
+#$today = (Get-Date -Format FileDate)
+#$todayExists = Test-Path $today
 
-if (!$todayExists) {
-	new-item $today -ItemType Directory
-}
+#if (!$todayExists) {
+#	new-item $today -ItemType Directory
+#}
 
-set-location $today
+#set-location $today
 
 # function prompt {
 # 	Write-Host -NoNewLine (Get-Location)
 # 	return ">"
 # }
 
-function notepad ($fileName) {
-	&("C:\Program Files\Notepad++\notepad++.exe") $fileName
-}
+#function notepad ($fileName) {
+#	&("C:\Program Files\Notepad++\notepad++.exe") $fileName
+#}
 
-function note($fileName) {
-	notepad ($fileName)
-}
+#function note($fileName) {
+#	notepad ($fileName)
+#}
 
-Set-Alias -Name np -Value notepad
+#Set-Alias -Name np -Value notepad
 
 # I dislike trusting myself to have typed strings correctly. 
 function nameof($functionName) {
@@ -70,45 +70,45 @@ function Promote($verb, [parameter(Mandatory=$false)]$alias) {
 	Write-Host " function available"
 }
 
-function New-CaptainsLog {
-	$url = "https://gist.githubusercontent.com/ogre71/4afed194bee1cb63a6b4b580de1cda03/raw/780dcb2960a2cfcd534d6cbf4edd836f49744124/CaptainsLog.html" 
-	$contents = Invoke-RestMethod -Uri $url
+# function New-CaptainsLog {
+# 	$url = "https://gist.githubusercontent.com/ogre71/4afed194bee1cb63a6b4b580de1cda03/raw/780dcb2960a2cfcd534d6cbf4edd836f49744124/CaptainsLog.html" 
+# 	$contents = Invoke-RestMethod -Uri $url
 
-	$contents = $contents.Replace("`$`$date`$`$", (Get-Date))
+# 	$contents = $contents.Replace("`$`$date`$`$", (Get-Date))
 	
-	$logExists = Test-Path "CaptainsLog.html"
-	if (!$logExists) { 
-			$contents >> "CaptainsLog.html"
-			notepad "CaptainsLog.html"
-	}
+# 	$logExists = Test-Path "CaptainsLog.html"
+# 	if (!$logExists) { 
+# 			$contents >> "CaptainsLog.html"
+# 			notepad "CaptainsLog.html"
+# 	}
 	
-	& ".\CaptainsLog.html"
+# 	& ".\CaptainsLog.html"
 	
-	return $contents
-}
+# 	return $contents
+# }
 
-Promote("New-CaptainsLog")
+#Promote("New-CaptainsLog")
 
 #TODO: change this to a different gist than captainslog, create the bootstrap gist
 #TODO: abstract most of this and captainslog into it's own (private?) function
-function New-Bootstrap { 
-	$url = "https://gist.githubusercontent.com/ogre71/4afed194bee1cb63a6b4b580de1cda03/raw/780dcb2960a2cfcd534d6cbf4edd836f49744124/CaptainsLog.html" 
-	$contents = Invoke-RestMethod -Uri $url
+# function New-Bootstrap { 
+# 	$url = "https://gist.githubusercontent.com/ogre71/4afed194bee1cb63a6b4b580de1cda03/raw/780dcb2960a2cfcd534d6cbf4edd836f49744124/CaptainsLog.html" 
+# 	$contents = Invoke-RestMethod -Uri $url
 
-	$contents = $contents.Replace("`$`$date`$`$", (Get-Date))
+# 	$contents = $contents.Replace("`$`$date`$`$", (Get-Date))
 	
-	$logExists = Test-Path "bootstrapQuickStart.html"
-	if (!$logExists) { 
-			$contents >> "bootstrapQuickStart.html"
-			notepad "bootstrapQuickStart.html"
-	}
+# 	$logExists = Test-Path "bootstrapQuickStart.html"
+# 	if (!$logExists) { 
+# 			$contents >> "bootstrapQuickStart.html"
+# 			notepad "bootstrapQuickStart.html"
+# 	}
 	
-	& ".\bootstrapQuickStart.html"
+# 	& ".\bootstrapQuickStart.html"
 	
-	return $contents
-}
+# 	return $contents
+# }
 
-Promote "New-Bootstrap" 
+# Promote "New-Bootstrap" 
 
 function Get-NamedRepository (
 	[ValidateSet("PsOgreProfile", "ReadableThings", "VsSnippets", "Physics", "Stuff", "3dStuff")]
