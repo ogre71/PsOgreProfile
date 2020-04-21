@@ -111,7 +111,7 @@ function Promote($verb, [parameter(Mandatory=$false)]$alias) {
 # Promote "New-Bootstrap" 
 
 function Get-NamedRepository (
-	[ValidateSet("PsOgreProfile", "ReadableThings", "VsSnippets", "Physics", "Stuff", "3dStuff")]
+	[ValidateSet("PsOgreProfile", "ReadableThings", "VsSnippets", "Physics", "Stuff", "3dStuff", "Templates")]
 	$repository	){ 
 	if ($repository -like "PsOgreProfile") {
 		git clone https://github.com/ogre71/PsOgreProfile.git
@@ -128,7 +128,10 @@ function Get-NamedRepository (
 		cd Stuff
 	} elseif ($repository -like "3dStuff") { 
 		git clone https://github.com/ogre71/3dStuff.git
-		cd 3dStuff
+        cd 3dStuff
+    } elseif ($repository -like "Templates") {
+        git clone https://github.com/ogre71/Templates.git
+        cd Templates
 	} else {
 		Write-Host "Unknown repository: "
 		Write-Host "$repository" -ForegroundColor "red"
@@ -184,3 +187,19 @@ Promote("zork")
 #$serializedThing = $serializer.Serialize($thing)
 #$serializer.DeserializeObject($serializedThing)
 
+function New-FromTemplate(
+	[ValidateSet("html")]
+	$template) {
+		if ($template -like "html") { 
+			$url = "https://raw.githubusercontent.com/ogre71/Templates/master/index.html"
+			$contents = Invoke-WebRequest -Uri $url
+			Write-Host $contents.Content
+		 	$fileExists = Test-Path "index.html"
+			
+			 if (!$fileExists) { 
+				$contents.Content >> "index.html"
+			} 
+
+			code .\index.html			
+		}
+	} 
