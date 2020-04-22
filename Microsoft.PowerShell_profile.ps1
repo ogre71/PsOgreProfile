@@ -1,7 +1,5 @@
 Write-Host "Hello, this is from your powershell profile."
-$scratchPath = "C:\Users\Ogre\scratch" 
-Write-Host "The scratch path is: " -NoNewLine
-Write-Host $scratchPath -foregroundColor "green"
+
 # $nppPath = "C:\Program Files (x86)\Notepad++\notepad++.exe"
 # Write-Host "Notepad++ is located here: " -NoNewLine
 # Write-Host $nppPath -foregroundColor "green"
@@ -19,23 +17,6 @@ Write-Host "The profile is located here: " $profile
 #function log {
 #	git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 #}
-
-#set-location $home
-#if (!(test-path scratch)){
-#	new-item "scratch" -ItemType Directory
-#}
-
-#set-location scratch
-
-#cd $scratchPath 
-#$today = (Get-Date -Format FileDate)
-#$todayExists = Test-Path $today
-
-#if (!$todayExists) {
-#	new-item $today -ItemType Directory
-#}
-
-#set-location $today
 
 # function prompt {
 # 	Write-Host -NoNewLine (Get-Location)
@@ -192,7 +173,7 @@ function New-FromTemplate(
 	$template) {
 		if ($template -like "html") { 
 			$url = "https://raw.githubusercontent.com/ogre71/Templates/master/index.html"
-			$contents = Invoke-WebRequest -Uri $url
+			$contents = Invoke-WebRequest -Uri $url -UseBasicParsing
 			Write-Host $contents.Content
 		 	$fileExists = Test-Path "index.html"
 			
@@ -203,3 +184,22 @@ function New-FromTemplate(
 			code .\index.html			
 		}
 	} 
+
+function Scratch() { 
+	set-location $home
+	if (!(test-path scratch)){
+		new-item "scratch" -ItemType Directory
+	}
+
+	set-location scratch
+
+	#cd $scratchPath 
+	$today = (Get-Date -Format FileDate)
+	$todayExists = Test-Path $today
+
+	if (!$todayExists) {
+		new-item $today -ItemType Directory
+	}
+
+	set-location $today
+}
